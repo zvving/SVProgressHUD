@@ -26,9 +26,9 @@ NSString * const SVProgressHUDStatusUserInfoKey = @"SVProgressHUDStatusUserInfoK
 static const CGFloat SVProgressHUDParallaxDepthPoints = 10.0f;
 static const CGFloat SVProgressHUDUndefinedProgress = -1;
 static const CGFloat SVProgressHUDDefaultAnimationDuration = 0.15f;
-static const CGFloat SVProgressHUDVerticalSpacing = 12.0f;
-static const CGFloat SVProgressHUDHorizontalSpacing = 12.0f;
-static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
+static const CGFloat SVProgressHUDVerticalSpacing = 20.0f;
+static const CGFloat SVProgressHUDHorizontalSpacing = 20.0f;
+static const CGFloat SVProgressHUDLabelSpacing = 4.0f;
 
 
 @interface SVProgressHUD ()
@@ -290,7 +290,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 + (void)showImage:(UIImage*)image status:(NSString*)status {
     NSTimeInterval displayInterval = [self displayDurationForString:status];
-    [[self sharedView] showImage:image status:status duration:displayInterval];
+    [[self sharedView] showImage:image status:status duration:2];
 }
 
 + (void)showImage:(UIImage*)image status:(NSString*)status maskType:(SVProgressHUDMaskType)maskType {
@@ -414,7 +414,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     CGFloat labelWidth = 0.0f;
     
     if(self.statusLabel.text) {
-        CGSize constraintSize = CGSizeMake(200.0f, 300.0f);
+        CGSize constraintSize = CGSizeMake(160.0f, 300.0f);
         labelRect = [self.statusLabel.text boundingRectWithSize:constraintSize
                                                         options:(NSStringDrawingOptions)(NSStringDrawingUsesFontLeading | NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin)
                                                      attributes:@{NSFontAttributeName: self.statusLabel.font}
@@ -878,7 +878,8 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
                 UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:blurEffectStyle];
                 
                 self.hudView.effect = blurEffect;
-                self.hudVibrancyView.effect = [UIVibrancyEffect effectForBlurEffect:blurEffect];
+                /* Fix iOS8 hud dismiss bug */
+//                self.hudVibrancyView.effect = [UIVibrancyEffect effectForBlurEffect:blurEffect];
             } else {
                 self.hudView.alpha = 1.0f;
             }
@@ -1312,7 +1313,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 - (UIImageView*)imageView {
     if(!_imageView) {
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 28.0f, 28.0f)];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 56.0f, 56.0f)];
     }
     if(!_imageView.superview) {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
